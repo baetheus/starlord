@@ -13,22 +13,37 @@ var log = bunyan.createLogger({name: 'spacemichael'});
 
 // LIMITS
 var LIMITS = {
-  cooldown: 500
+  cooldown: 10
 };
 
 // BBB Pinout Map
-var pins = {
-  out1: new onoff(66, 'out'),
-  out2: new onoff(67, 'out'),
-  out3: new onoff(69, 'out'),
-  out4: new onoff(68, 'out')
-};
+var pins = mapPins([66, 67, 69, 68]);
 
 // Helper States
 var eState = {
   on: {out1: 1, out2: 1, out3: 1, out4: 1},
   off: {out1: 0, out2: 0, out3: 0, out4: 0},
 };
+
+
+// mapPins - takes an array of gpio pin ids and returns an object with
+//   initialized pin objects set to output
+// INPUT
+// pinmap = [60, 61, 62, 63]
+// OUTPUT
+// {
+//   out1: new onoff(60, 'off'), 
+//   out2: new onoff(61, 'off'),
+//   out3: new onoff(62, 'off'),
+//   out4: new onoff(63, 'off'),
+// }
+function mapPins(pinmap) {
+  var output = {};
+  for (var i = 0, len = pinmap.length; i < len; i++) {
+    output['out' + (i + 1)] = new onoff(pinmap[i], 'out');
+  }
+  return output;
+}
 
 // writeHelper - Wrapper Function for async gpio write from pins
 // INPUT
@@ -100,7 +115,7 @@ function coordinate(stateArr, period, repeat, last, callback) {
       if (repeat === -1) {
         coordinate(stateArr, period, repeat, callback);
       } else if (repeat > 0) {
-        coordinate(stateArr, period, repeat, callback);
+        coordinate(stateArr, period, repeat - 1, callback);
       } else {
         callback(err);
       }
