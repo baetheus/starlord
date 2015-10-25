@@ -10,6 +10,7 @@ var onoff = require('onoff').Gpio;
 
 // Setup Log
 var log = bunyan.createLogger({name: 'spacemichael'});
+log.level('trace');
 
 // LIMITS
 var LIMITS = {
@@ -110,10 +111,13 @@ function coordinate(stateArr, period, repeat, last, callback) {
     }, function coordinateCB(err, results) {
       log.debug({err: err, results: results}, 'coordinateCB:');
       if (repeat === -1) {
+        log.trace('Coordinate repeat forever..');
         coordinate(stateArr, period, repeat, callback);
       } else if (repeat > 0) {
+        log.trace(sprintf('Coordinate repeat %d more time(s).', repeat));
         coordinate(stateArr, period, repeat - 1, callback);
       } else {
+        log.trace('Completed coordination.');
         callback(err);
       }
     });
