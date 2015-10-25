@@ -16,9 +16,6 @@ var LIMITS = {
   cooldown: 10
 };
 
-// BBB Pinout Map
-var pins = mapPins([66, 67, 69, 68]);
-
 // Helper States
 var eState = {
   on: {out1: 1, out2: 1, out3: 1, out4: 1},
@@ -160,6 +157,9 @@ function sanitize(stateArr, period, limit) {
   log.trace({stateArr: stateArr, period: period, limit: limit, errors: errors}, 'sanitize:');
   return (errors.length > 0) ? errors : null;
 }
+
+// Generate pins
+var pins = mapPins([66, 67, 69, 68]);
 
 // Test States
 var ts = {
