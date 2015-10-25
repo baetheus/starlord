@@ -8,6 +8,8 @@ var bunyan = require('bunyan');
 var vasync = require('vasync');
 var onoff = require('onoff').Gpio;
 
+var pinmap = require('./pinmap');
+
 // Setup Log
 var log = bunyan.createLogger({name: 'spacemichael'});
 log.level('trace');
@@ -18,7 +20,7 @@ var LIMITS = {
 };
 
 // Helper States
-var eState = {
+var all = {
   on: {out1: 1, out2: 1, out3: 1, out4: 1},
   off: {out1: 0, out2: 0, out3: 0, out4: 0},
 };
@@ -90,7 +92,7 @@ function setState(state, callback) {
 function coordinate(stateArr, period, repeat, last, callback) {
   var clean = sanitize(stateArr, period, LIMITS.cooldown);
   repeat = (typeof repeat === 'undefined') ? 0 : repeat;
-  last = (typeof last === 'undefined') ? eState.off : last;
+  last = (typeof last === 'undefined') ? all.off : last;
 
   function waitState(state, callback) {
     setState(state, function waitStateCB(err, results) {
@@ -118,7 +120,7 @@ function coordinate(stateArr, period, repeat, last, callback) {
         coordinate(stateArr, period, repeat - 1, last, callback);
       } else {
         log.trace('Completed coordination.');
-        callback(err);
+        setState(last, callback);
       }
     });
   }
@@ -163,7 +165,7 @@ function sanitize(stateArr, period, limit) {
 }
 
 // Generate pins
-var pins = mapPins([66, 67, 69, 68]);
+var pins = mapPins(pinmap);
 
 // Test States
 var ts = {
@@ -175,6 +177,6 @@ var ts = {
 
 var ta = {
   nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
-  butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0},{},{},{},{},{},eState.on,{},{},{},{},{},{},eState.off]
+  butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0},{},{},{},{},{},all.on,{},{},{},{},{},{},all.off]
 };
 
