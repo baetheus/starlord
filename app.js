@@ -50,27 +50,22 @@ function setState(state, callback) {
   }, callback);
 }
 
-function waitState(data, callback) {
-  setState(data.state, function waitStateCB(err, results) {
-    log.trace({err: err, results: results}, 'waitStateCB:');
-    setTimeout(function () {
-      callback(err);
-    }, data.wait);
-  });
-}
-
 // coordinate - Takes an array of states and a period and runs each entry
 //   in the array each period.
 function coordinate(stateArr, period, repeat, callback) {
-  var inputs = [];
   repeat = (typeof repeat === 'undefined') ? 0 : repeat;
 
-  for (var i = 0, len = stateArr.length; i < len; i++) {
-    inputs.push({state: stateArr[i], wait: period});
+  function waitState(state, callback) {
+    setState(state, function waitStateCB(err, results) {
+      setTimeout(function () {
+        callback(err);
+      }, period);
+    });
   }
+
   vasync.forEachPipeline({
     'func': waitState,
-    'inputs': inputs
+    'inputs': stateArr
   }, function coordinateCB(err, results) {
     log.debug({err: err, results: results}, 'coordinateCB:');
     if (repeat > 0) {
@@ -93,5 +88,7 @@ var ts = {
 
 var ta = {
   nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
-  allonoff: [ts.allOn, ts.allOff]
+  allonoff: [ts.allOn, ts.allOff],
+  one: []
 };
+
