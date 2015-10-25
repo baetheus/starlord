@@ -97,8 +97,10 @@ function coordinate(stateArr, period, repeat, last, callback) {
       'inputs': stateArr
     }, function coordinateCB(err, results) {
       log.debug({err: err, results: results}, 'coordinateCB:');
-      if (repeat > 0) {
-        coordinate(stateArr, period, repeat - 1, callback);
+      if (repeat === -1) {
+        coordinate(stateArr, period, repeat, callback);
+      } else if (repeat > 0) {
+        coordinate(stateArr, period, repeat, callback);
       } else {
         callback(err);
       }
