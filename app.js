@@ -39,6 +39,7 @@ function writeHelper(data, callback) {
 // }
 function setState(state, callback) {
   var inputs = [];
+
   for (var key in state) {
     inputs.push({ pin: key, value: state[key] });
   }
@@ -49,8 +50,48 @@ function setState(state, callback) {
   }, callback);
 }
 
+function waitState(data, callback) {
+  setState(data.state, function waitStateCB(err, results) {
+    log.trace({err: err, results: results}, 'waitStateCB:');
+    setTimeout(function () {
+      callback(err);
+    }, data.wait);
+  });
+}
+
+// coordinate - Takes an array of states and a period and runs each entry
+//   in the array each period.
+function coordinate(stateArr, period, repeat, callback) {
+  var inputs = [];
+  repeat = (typeof repeat === 'undefined') ? 0 : repeat;
+
+  for (var i = 0, len = stateArr.length; i < len; i++) {
+    inputs.push({state: stateArr[i], wait: period});
+  }
+  vasync.forEachPipeline({
+    'func': waitState,
+    'inputs': inputs
+  }, function coordinateCB(err, results) {
+    log.debug({err: err, results: results}, 'coordinateCB:');
+    if (repeat > 0) {
+      coordinate(stateArr, period, repeat - 1, callback);
+    } else {
+      callback(err);
+    }
+  });
+}
+
 // Test States
-var tstates = {
+var ts = {
   allOn: {out1: 1, out2: 1, out3: 1, out4: 1},
-  allOff: {out1: 0, out2: 0, out3: 0, out4: 0}
+  allOff: {out1: 0, out2: 0, out3: 0, out4: 0},
+  one: {out1: 1, out2: 0, out3: 0, out4: 0},
+  two: {out1: 0, out2: 1, out3: 0, out4: 0},
+  three: {out1: 0, out2: 0, out3: 1, out4: 0},
+  four: {out1: 0, out2: 0, out3: 0, out4: 1}
 };
+
+var ta = {
+  nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
+  allonoff: [ts.allOn, ts.allOff]
+}
