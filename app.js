@@ -83,7 +83,7 @@ function setState(state, callback) {
 // INPUTS
 // stateArr = [state1, state2] As defined for setState
 // period = time between state changes in milliseconds
-// repeat = number of times to repeat 
+// repeat = number of times to repeat, -1 to repeat forever
 // last = state to default to after coordinate completes (default: all off);
 // OUTPUT
 // callback(err), returns undefined
@@ -112,10 +112,10 @@ function coordinate(stateArr, period, repeat, last, callback) {
       log.debug({err: err, results: results}, 'coordinateCB:');
       if (repeat === -1) {
         log.trace('Coordinate repeat forever..');
-        coordinate(stateArr, period, repeat, callback);
+        coordinate(stateArr, period, repeat, last, callback);
       } else if (repeat > 0) {
         log.trace(sprintf('Coordinate repeat %d more time(s).', repeat));
-        coordinate(stateArr, period, repeat - 1, callback);
+        coordinate(stateArr, period, repeat - 1, last, callback);
       } else {
         log.trace('Completed coordination.');
         callback(err);
@@ -175,7 +175,6 @@ var ts = {
 
 var ta = {
   nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
-  allonoff: [ts.allOn, ts.allOff],
   butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0},{},{},{},{},{},eState.on,{},{},{},{},{},{},eState.off]
 };
 
