@@ -94,4 +94,4 @@ var ts = {
 var ta = {
   nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
   allonoff: [ts.allOn, ts.allOff]
-}
+};
