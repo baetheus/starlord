@@ -93,7 +93,7 @@ function sanitize(stateArr, period, limit) {
     for (var pin in state) {
       if (cooldown[pin] !== undefined) {
         clean = false;
-        errors.push(sprintf('State %d in array still needs %d millisecond(s) of cooldown', i, cooldown[pin]));
+        errors.push(sprintf('State at index %d still needs %d millisecond(s) of cooldown for %d.', i, cooldown[pin], pin));
       } else {
         cooldown[pin] = limit;
       }
