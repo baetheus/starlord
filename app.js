@@ -157,6 +157,6 @@ var ts = {
 var ta = {
   nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
   allonoff: [ts.allOn, ts.allOff],
-  one: []
+  butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0},,,,,,eState.on,,,,,,,eState.off]
 };
 
