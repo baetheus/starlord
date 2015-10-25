@@ -76,6 +76,33 @@ function coordinate(stateArr, period, repeat, callback) {
   });
 }
 
+function sanitize(stateArr, period, limit) {
+  var cooldown = {};
+  var errors = [];
+  var clean = true;
+  for (var i = 0, len = stateArr.length; i < len; i++) {
+    var state = stateArr[i];
+    // Decrement Cooldowns
+    for (var cdpin in cooldown) {
+      cooldown[cdpin] -= period;
+      if (cooldown[cdpin] <= 0) {
+        delete cooldown[cdpin];
+      }
+    }
+
+    for (var pin in state) {
+      if (cooldown[pin] !== undefined) {
+        clean = false;
+        errors.push(sprintf('State %d in array still needs %d millisecond(s) of cooldown', i, cooldown[pin]));
+      } else {
+        cooldown[pin] = limit;
+      }
+
+    }
+  }
+  return (errors.length > 0) ? errors : null;
+}
+
 // Test States
 var ts = {
   allOn: {out1: 1, out2: 1, out3: 1, out4: 1},
