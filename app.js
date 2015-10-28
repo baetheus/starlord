@@ -8,7 +8,7 @@ var bunyan = require('bunyan');
 var vasync = require('vasync');
 var onoff = require('onoff').Gpio;
 
-var pinmap = require('./pinmap');
+var pinmap = require('./pinmap-bbb');
 
 // Setup Log
 var log = bunyan.createLogger({name: 'spacemichael'});
@@ -21,8 +21,8 @@ var LIMITS = {
 
 // Helper States
 var all = {
-  on: {out1: 1, out2: 1, out3: 1, out4: 1},
-  off: {out1: 0, out2: 0, out3: 0, out4: 0},
+  on: {out1: 1, out2: 1, out3: 1, out4: 1, out5: 1, out6: 1},
+  off: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0},
 };
 
 
@@ -169,14 +169,16 @@ var pins = mapPins(pinmap);
 
 // Test States
 var ts = {
-  one: {out1: 1, out2: 0, out3: 0, out4: 0},
-  two: {out1: 0, out2: 1, out3: 0, out4: 0},
-  three: {out1: 0, out2: 0, out3: 1, out4: 0},
-  four: {out1: 0, out2: 0, out3: 0, out4: 1}
+  one: {out1: 1, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0},
+  two: {out1: 0, out2: 1, out3: 0, out4: 0, out5: 0, out6: 0},
+  three: {out1: 0, out2: 0, out3: 1, out4: 0, out5: 0, out6: 0},
+  four: {out1: 0, out2: 0, out3: 0, out4: 1, out5: 0, out6: 0},
+  five: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 1, out6: 0},
+  six: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 1}
 };
 
 var ta = {
-  nightrider: [ts.one, ts.two, ts.three, ts.four, ts.three, ts.two],
+  nightrider: [ts.one, ts.two, ts.three, ts.four, ts.five, ts.six, ts.five, ts.four, ts.three, ts.two],
   butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0},{},{},{},{},{},all.on,{},{},{},{},{},{},all.off]
 };
 
