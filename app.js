@@ -21,8 +21,8 @@ var LIMITS = {
 
 // Helper States
 var all = {
-  on: {out1: 1, out2: 1, out3: 1, out4: 1, out5: 1, out6: 1},
-  off: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0},
+  on: {out1: 1, out2: 1, out3: 1, out4: 1, out5: 1, out6: 1, out7: 1, out8: 1, out9: 1, out10: 1, out11: 1, out12: 1},
+  off: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
 };
 
 
@@ -169,12 +169,18 @@ var pins = mapPins(pinmap);
 
 // Test States
 var ts = {
-  one: {out1: 1, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0},
-  two: {out1: 0, out2: 1, out3: 0, out4: 0, out5: 0, out6: 0},
-  three: {out1: 0, out2: 0, out3: 1, out4: 0, out5: 0, out6: 0},
-  four: {out1: 0, out2: 0, out3: 0, out4: 1, out5: 0, out6: 0},
-  five: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 1, out6: 0},
-  six: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 1}
+  one:    {out1: 1, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  two:    {out1: 0, out2: 1, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  three:  {out1: 0, out2: 0, out3: 1, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  four:   {out1: 0, out2: 0, out3: 0, out4: 1, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  five:   {out1: 0, out2: 0, out3: 0, out4: 0, out5: 1, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  six:    {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 1, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  seven:  {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 1, out8: 0, out9: 0, out10: 0, out11: 0, out12: 0},
+  eight:  {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 1, out9: 0, out10: 0, out11: 0, out12: 0},
+  nine:   {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 1, out10: 0, out11: 0, out12: 0},
+  ten:    {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 1, out11: 0, out12: 0},
+  eleven: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 1, out12: 0},
+  twelve: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 1}
 };
 
 var ta = {
