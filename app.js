@@ -89,6 +89,7 @@ function setState(state, callback) {
 // last = state to default to after coordinate completes (default: all off);
 // OUTPUT
 // callback(err), returns undefined
+// e.g. coordinate(ta.nightrider, 100, 1, all.off, function() {});
 function coordinate(stateArr, period, repeat, last, callback) {
   var clean = sanitize(stateArr, period, LIMITS.cooldown);
   repeat = (typeof repeat === 'undefined') ? 0 : repeat;
@@ -180,11 +181,33 @@ var ts = {
   nine:   {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 1, out10: 0, out11: 0, out12: 0},
   ten:    {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 1, out11: 0, out12: 0},
   eleven: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 1, out12: 0},
-  twelve: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 1}
+  twelve: {out1: 0, out2: 0, out3: 0, out4: 0, out5: 0, out6: 0, out7: 0, out8: 0, out9: 0, out10: 0, out11: 0, out12: 1},
 };
 
+//pin aliases
+pins['rose_red'] = pins['out1']; 
+pins['rose_white'] = pins['out7'];
+pins['windows'] = pins['out2'];
+pins['bush_mail'] = pins['out3']; 
+pins['tree_white'] = pins['out4'];
+pins['tree_red'] = pins['out5'];
+pins['tree_blue'] = pins['out6'];
+pins['icicles'] = pins['out8'];
+pins['center_bush'] = pins['out9'];
+pins['center_wall'] = pins['out10'];
+
+//custom states
+var cs = {
+  candy_cane_red:   {rose_red: 1, rose_white: 1, windows: 1, bush_mail: 1, tree_white: 0, tree_red: 1, tree_blue: 1, icicles: 1, center_bush: 1, center_wall: 1},
+  candy_cane_white: {rose_red: 1, rose_white: 1, windows: 1, bush_mail: 1, tree_white: 1, tree_red: 0, tree_blue: 1, icicles: 1, center_bush: 1, center_wall: 1}
+};
+
+//test arrays
 var ta = {
-  nightrider: [ts.one, ts.two, ts.three, ts.four, ts.five, ts.six, ts.five, ts.four, ts.three, ts.two],
-  butts: [{out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out5: 1}, {out6: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0}, {out5: 0}, {out6: 0}, {},{},{},{},{},all.on,{},{},{},{},{},{},all.off]
+  nightrider: [ts.one, ts.two, ts.three, ts.four, ts.five, ts.six, ts.seven, ts.eight, ts.nine, ts.ten, ts.nine, ts.eight, ts.seven, ts.six, ts.five, ts.four, ts.three, ts.two],
+  butts: [all.on, {out1: 1}, {out2: 1}, {out3: 1}, {out4: 1}, {out5: 1}, {out6: 1}, {out1: 0}, {out2: 0}, {out3: 0}, {out4: 0}, {out5: 0}, {out6: 0}, {},{},{},{},{},all.on,{},{},{},{},{},{},all.off],
+  candy_cane: [
+    cs.candy_cane_red,
+    cs.candy_cane_white
+  ]
 };
-
