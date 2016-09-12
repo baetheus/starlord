@@ -1,15 +1,16 @@
 {
-  "name": "spacemichael",
+  "name": "starlord",
   "version": "0.0.1",
   "description": "An RPi/BBB GPIO Choreographer.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git@git.null.pub:2222/hylians/spacemichael.git"
+  "repository": "github:baetheus/starlord",
+  "bugs": {
+    "url": "https://github.com/baetheus/starlord/issues"
   },
+  "homepage": "https://github.com/baetheus/starlord#readme",
   "keywords": [
     "rpi",
     "bbb",
@@ -17,19 +18,14 @@
     "dance"
   ],
   "contributors": [
-    {
-      "name": "Brandon Blaylock",
-      "email": "brandon@null.pub"
-    },
-    {
-      "name": "Jordan Belford",
-      "email": "jordan.g.belford@gmail.com"
-    }
+    "Brandon Blaylock <brandon@null.pub>",
+    "Jordan Belford <jordan.g.belford@gmail.com>"
   ],
   "license": "MPL-2.0",
   "dependencies": {
     "bunyan": "^1.5.1",
     "onoff": "^1.0.3",
     "vasync": "^1.6.3"
-  }
+  },
+  "author": "Brandon Blaylock <brandon@null.pub>"
 }
